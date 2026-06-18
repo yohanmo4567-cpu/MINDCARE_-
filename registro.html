@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindCare+ · Crear cuenta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS (mismo sistema que login.html) ─────────────── */
+    :root {
+      --sage:        #4A7C6F;
+      --sage-light:  #6FA899;
+      --sage-mist:   #EAF3F1;
+      --slate:       #2B3A3E;
+      --mist:        #F5F8F7;
+      --cloud:       #FFFFFF;
+      --stone:       #7A8C8E;
+      --pebble:      #C8D5D3;
+      --error:       #C0444B;
+      --error-bg:    #FDF2F2;
+
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+      --radius-sm:    6px;
+      --radius-md:    12px;
+      --radius-lg:    20px;
+      --shadow:       0 4px 24px rgba(43, 58, 62, 0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--mist);
+      color: var(--slate);
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* ── BRAND PANEL ──────────────────────────────────────────── */
+    .brand-panel {
+      background: var(--sage);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .brand-panel::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 10% 90%, rgba(255,255,255,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 90% 10%, rgba(255,255,255,0.05) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .brand-logo-wrap { display: flex; align-items: center; gap: 0.65rem; }
+    .brand-logo-img-placeholder {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 1.1rem; color: #fff; flex-shrink: 0;
+    }
+    .brand-wordmark { font-family: var(--font-display); font-size: 1.6rem; color: #fff; letter-spacing: -0.02em; }
+    .brand-wordmark span { color: rgba(255,255,255,0.55); }
+
+    .brand-hero { position: relative; z-index: 1; }
+    .brand-tagline {
+      font-family: var(--font-display); font-style: italic;
+      font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+      color: #fff; line-height: 1.2; margin-bottom: 1.25rem;
+    }
+    .brand-sub { font-size: 0.93rem; color: rgba(255,255,255,0.72); line-height: 1.7; max-width: 30ch; }
+
+    /* Steps progress */
+    .brand-steps {
+      display: flex; flex-direction: column; gap: 0.75rem;
+      margin-top: 2rem; position: relative; z-index: 1;
+    }
+    .brand-step { display: flex; align-items: center; gap: 0.65rem; }
+    .step-num {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 600; color: #fff; flex-shrink: 0;
+    }
+    .step-label { font-size: 0.82rem; color: rgba(255,255,255,0.8); }
+
+    .deco { position: absolute; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.12); }
+    .deco-1 { width: 280px; height: 280px; bottom: -60px; right: -80px; }
+    .deco-2 { width: 160px; height: 160px; bottom: 80px;  right: 40px; }
+    .deco-3 { width:  60px; height:  60px; bottom: 200px; right: 160px; background: rgba(255,255,255,0.06); border: none; }
+
+    /* ── FORM PANEL ───────────────────────────────────────────── */
+    .form-panel {
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem; overflow-y: auto;
+    }
+    .form-card {
+      background: var(--cloud); border-radius: var(--radius-lg); box-shadow: var(--shadow);
+      padding: clamp(2rem, 4vw, 2.75rem) clamp(2rem, 5vw, 3.5rem);
+      width: 100%; max-width: 440px;
+      margin: auto;
+    }
+
+    .card-header { margin-bottom: 1.75rem; }
+    .card-eyebrow {
+      font-size: 0.72rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--sage); margin-bottom: 0.45rem;
+    }
+    .card-title { font-family: var(--font-display); font-size: 1.85rem; color: var(--slate); line-height: 1.15; }
+
+    /* ── ALERT ─────────────────────────────────────────────────── */
+    .alert {
+      display: none; border-radius: var(--radius-sm);
+      padding: 0.7rem 0.9rem; font-size: 0.83rem;
+      margin-bottom: 1.25rem; line-height: 1.45;
+    }
+    .alert.visible { display: block; }
+    .alert-error { background: var(--error-bg); border: 1px solid rgba(192,68,75,0.25); color: var(--error); }
+
+    /* ── FIELDS ───────────────────────────────────────────────── */
+    .field { margin-bottom: 1.1rem; }
+    .field label { display: block; font-size: 0.82rem; font-weight: 500; color: var(--slate); margin-bottom: 0.4rem; }
+    .input-wrap { position: relative; background: #fff; border-radius: var(--radius-sm); }
+    .input-wrap > svg {
+      position: absolute; left: 13px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--stone); pointer-events: none;
+      width: 16px; height: 16px; transition: color 0.2s;
+    }
+    .field input, .field select {
+      width: 100%;
+      padding: 0.7rem 0.9rem 0.7rem 2.4rem;
+      border: 1.5px solid var(--pebble); border-radius: var(--radius-sm);
+      font-family: var(--font-body); font-size: 0.92rem; color: var(--slate);
+      background: transparent; transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      outline: none; position: relative; z-index: 1;
+    }
+    .field select { padding-left: 2.4rem; cursor: pointer; appearance: none; }
+    .select-arrow {
+      position: absolute; right: 12px; top: 50%;
+      transform: translateY(-50%); pointer-events: none; color: var(--stone);
+    }
+    .field input::placeholder { color: var(--stone); opacity: 0.7; }
+    .field input:focus, .field select:focus {
+      border-color: var(--sage); background: var(--sage-mist);
+      box-shadow: 0 0 0 3px rgba(74,124,111,0.14);
+    }
+    .input-wrap:focus-within > svg { color: var(--sage); }
+    .toggle-pw {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--stone);
+      padding: 2px; z-index: 2; display: flex; align-items: center;
+    }
+    .toggle-pw:hover { color: var(--sage); }
+    .toggle-pw svg { width: 16px; height: 16px; }
+
+    .field-error { display: none; font-size: 0.77rem; color: var(--error); margin-top: 0.35rem; }
+    .field.has-error input, .field.has-error select { border-color: var(--error); background: var(--error-bg); }
+    .field.has-error .field-error { display: block; }
+
+    /* Two-column row */
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+
+    /* Password strength */
+    .pw-strength { margin-top: 0.5rem; }
+    .pw-strength-bar {
+      height: 4px; border-radius: 2px;
+      background: var(--pebble); overflow: hidden; margin-bottom: 0.3rem;
+    }
+    .pw-strength-fill {
+      height: 100%; border-radius: 2px;
+      background: var(--pebble); width: 0%;
+      transition: width 0.3s, background 0.3s;
+    }
+    .pw-strength-label { font-size: 0.72rem; color: var(--stone); }
+
+    /* Terms */
+    .terms-row {
+      display: flex; align-items: flex-start; gap: 0.5rem;
+      margin: 1.25rem 0 1.5rem;
+    }
+    .terms-row input[type="checkbox"] {
+      accent-color: var(--sage); width: 15px; height: 15px;
+      margin-top: 0.15rem; flex-shrink: 0; cursor: pointer;
+    }
+    .terms-row label { font-size: 0.82rem; color: var(--stone); line-height: 1.5; cursor: pointer; }
+    .terms-row a { color: var(--sage); text-decoration: none; font-weight: 500; }
+    .terms-row a:hover { text-decoration: underline; }
+
+    /* ── BUTTON ───────────────────────────────────────────────── */
+    .btn-primary {
+      width: 100%; padding: 0.85rem;
+      background: var(--sage); color: #fff;
+      border: none; border-radius: var(--radius-sm);
+      font-family: var(--font-body); font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary:hover  { background: var(--sage-light); box-shadow: 0 4px 16px rgba(74,124,111,0.3); }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:focus-visible { outline: 3px solid var(--sage); outline-offset: 2px; }
+    .btn-primary.loading .btn-text { opacity: 0; }
+    .btn-primary .spinner {
+      display: none; position: absolute;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    .btn-primary.loading .spinner { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── FOOTER ───────────────────────────────────────────────── */
+    .divider {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin: 1.5rem 0; font-size: 0.78rem;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--pebble); }
+    .divider span { color: var(--stone); white-space: nowrap; }
+
+    .login-row { text-align: center; font-size: 0.85rem; color: var(--stone); }
+    .login-row a { color: var(--sage); font-weight: 600; text-decoration: none; }
+    .login-row a:hover { text-decoration: underline; }
+
+    .card-footer {
+      margin-top: 1.5rem; padding-top: 1.25rem;
+      border-top: 1px solid var(--pebble);
+      text-align: center; font-size: 0.73rem; color: var(--stone); line-height: 1.6;
+    }
+    .card-footer a { color: var(--stone); }
+    .card-footer a:hover { color: var(--sage); }
+
+    /* ── RESPONSIVE ───────────────────────────────────────────── */
+    @media (max-width: 700px) {
+      body { grid-template-columns: 1fr; }
+      .brand-panel { padding: 2rem 1.75rem 1.75rem; }
+      .brand-tagline { font-size: 1.6rem; }
+      .deco-1 { width: 180px; height: 180px; bottom: -40px; right: -50px; }
+      .deco-2 { width: 100px; height: 100px; bottom: 40px; right: 20px; }
+      .deco-3 { display: none; }
+      .form-panel { padding: 1.5rem 1rem; align-items: flex-start; }
+      .form-card { border-radius: var(--radius-md); padding: 2rem 1.5rem; box-shadow: none; }
+      .field-row { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .btn-primary, .field input, .pw-strength-fill { transition: none; }
+      .spinner { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── BRAND PANEL ──────────────────────────────────────────── -->
+<aside class="brand-panel" aria-hidden="true">
+  <div class="brand-logo-wrap">
+    <!--
+      LOGO: reemplaza con tu imagen:
+      <img src="logo.png" alt="MindCare+" style="width:40px;height:40px;border-radius:10px;object-fit:contain;" />
+    -->
+    <div class="brand-logo-img-placeholder" aria-hidden="true">M+</div>
+    <div class="brand-wordmark">MindCare<span>+</span></div>
+  </div>
+
+  <div class="brand-hero">
+    <p class="brand-tagline">Empieza<br>tu camino hoy.</p>
+    <p class="brand-sub">Crear tu cuenta toma menos de un minuto. Tu bienestar te espera.</p>
+    <div class="brand-steps" aria-hidden="true">
+      <div class="brand-step"><div class="step-num">1</div><div class="step-label">Crea tu cuenta gratis</div></div>
+      <div class="brand-step"><div class="step-num">2</div><div class="step-label">Registra tu primer estado emocional</div></div>
+      <div class="brand-step"><div class="step-num">3</div><div class="step-label">Configura tus hábitos saludables</div></div>
+    </div>
+  </div>
+
+  <div class="deco deco-1" aria-hidden="true"></div>
+  <div class="deco deco-2" aria-hidden="true"></div>
+  <div class="deco deco-3" aria-hidden="true"></div>
+</aside>
+
+<!-- ── FORM PANEL ───────────────────────────────────────────── -->
+<main class="form-panel">
+  <div class="form-card">
+
+    <header class="card-header">
+      <p class="card-eyebrow">Registro gratuito</p>
+      <h1 class="card-title">Crea tu cuenta</h1>
+    </header>
+
+    <div class="alert alert-error" id="alert-error" role="alert" aria-live="assertive"></div>
+
+    <form id="register-form" action="registro.php" method="POST" novalidate>
+
+      <!-- Nombre y Apellido -->
+      <div class="field-row">
+        <div class="field" id="field-nombre">
+          <label for="nombre">Nombre</label>
+          <div class="input-wrap">
+            <input type="text" id="nombre" name="nombre"
+              autocomplete="given-name" placeholder="María"
+              required maxlength="100" aria-describedby="nombre-error" />
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <p class="field-error" id="nombre-error" role="alert">Ingresa tu nombre.</p>
+        </div>
+
+        <div class="field" id="field-apellido">
+          <label for="apellido">Apellido</label>
+          <div class="input-wrap">
+            <input type="text" id="apellido" name="apellido"
+              autocomplete="family-name" placeholder="García"
+              required maxlength="100" aria-describedby="apellido-error" />
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <p class="field-error" id="apellido-error" role="alert">Ingresa tu apellido.</p>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="field" id="field-email">
+        <label for="email">Correo electrónico</label>
+        <div class="input-wrap">
+          <input type="email" id="email" name="email"
+            autocomplete="email" placeholder="tu@correo.com"
+            required maxlength="150" aria-describedby="email-error" />
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </div>
+        <p class="field-error" id="email-error" role="alert">Ingresa un correo válido.</p>
+      </div>
+
+      <!-- Edad -->
+      <div class="field" id="field-edad">
+        <label for="edad">Edad <span style="color:var(--stone);font-weight:400">(opcional)</span></label>
+        <div class="input-wrap">
+          <input type="number" id="edad" name="edad"
+            placeholder="25" min="13" max="120" aria-describedby="edad-error" />
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </div>
+        <p class="field-error" id="edad-error" role="alert">Ingresa una edad válida (13–120).</p>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="field" id="field-password">
+        <label for="password">Contraseña</label>
+        <div class="input-wrap">
+          <input type="password" id="password" name="password"
+            autocomplete="new-password" placeholder="Mínimo 8 caracteres"
+            required minlength="8" aria-describedby="password-error password-strength-label" />
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <button type="button" class="toggle-pw" id="toggle-pw1" aria-label="Mostrar contraseña" aria-pressed="false">
+            <svg id="eye1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg id="eye1-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+        <div class="pw-strength" aria-live="polite">
+          <div class="pw-strength-bar"><div class="pw-strength-fill" id="pw-fill"></div></div>
+          <span class="pw-strength-label" id="password-strength-label"></span>
+        </div>
+        <p class="field-error" id="password-error" role="alert">La contraseña debe tener al menos 8 caracteres.</p>
+      </div>
+
+      <!-- Confirmar contraseña -->
+      <div class="field" id="field-confirm">
+        <label for="confirm">Confirma tu contraseña</label>
+        <div class="input-wrap">
+          <input type="password" id="confirm" name="confirm"
+            autocomplete="new-password" placeholder="Repite tu contraseña"
+            required aria-describedby="confirm-error" />
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <button type="button" class="toggle-pw" id="toggle-pw2" aria-label="Mostrar contraseña" aria-pressed="false">
+            <svg id="eye2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg id="eye2-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+        <p class="field-error" id="confirm-error" role="alert">Las contraseñas no coinciden.</p>
+      </div>
+
+      <!-- Términos -->
+      <div class="terms-row" id="field-terms">
+        <input type="checkbox" id="terms" name="terms" required aria-describedby="terms-error" />
+        <label for="terms">
+          Acepto los <a href="#">Términos de uso</a> y la <a href="#">Política de privacidad</a> de MindCare+.
+        </label>
+      </div>
+      <p class="field-error" id="terms-error" role="alert" style="margin-top:-1rem;margin-bottom:1rem;">Debes aceptar los términos para continuar.</p>
+
+      <button type="submit" class="btn-primary" id="btn-submit">
+        <div class="spinner" aria-hidden="true"></div>
+        <span class="btn-text">Crear cuenta</span>
+      </button>
+    </form>
+
+    <div class="divider"><span>¿Ya tienes cuenta?</span></div>
+    <p class="login-row"><a href="login.html">← Inicia sesión</a></p>
+
+    <footer class="card-footer">
+      Tus datos están protegidos y nunca se compartirán con terceros.
+    </footer>
+  </div>
+</main>
+
+<script>
+  // ── Lee errores desde PHP ────────────────────────────────────
+  const params  = new URLSearchParams(window.location.search);
+  const errEl   = document.getElementById('alert-error');
+  const errorMessages = {
+    'correo_existe': 'Este correo ya está registrado. ¿Quieres iniciar sesión?',
+    'campos':        'Completa todos los campos obligatorios.',
+    'contrasenas':   'Las contraseñas no coinciden.',
+    'servidor':      'Error del servidor. Intenta de nuevo.',
+    'edad_invalida': 'Ingresa una edad válida (entre 13 y 120 años).',
+  };
+  if (params.get('error')) {
+    errEl.textContent = errorMessages[params.get('error')] || 'Ocurrió un error inesperado.';
+    errEl.classList.add('visible');
+  }
+
+  // ── Password toggles ─────────────────────────────────────────
+  function setupToggle(btnId, inputId, eyeId, eyeOffId) {
+    const btn = document.getElementById(btnId);
+    const inp = document.getElementById(inputId);
+    const e1  = document.getElementById(eyeId);
+    const e2  = document.getElementById(eyeOffId);
+    btn.addEventListener('click', () => {
+      const show = inp.type === 'text';
+      inp.type = show ? 'password' : 'text';
+      btn.setAttribute('aria-pressed', String(!show));
+      btn.setAttribute('aria-label', show ? 'Mostrar contraseña' : 'Ocultar contraseña');
+      e1.style.display = show ? '' : 'none';
+      e2.style.display = show ? 'none' : '';
+    });
+  }
+  setupToggle('toggle-pw1', 'password', 'eye1', 'eye1-off');
+  setupToggle('toggle-pw2', 'confirm',  'eye2', 'eye2-off');
+
+  // ── Fortaleza de contraseña ──────────────────────────────────
+  const pwInput  = document.getElementById('password');
+  const pwFill   = document.getElementById('pw-fill');
+  const pwLabel  = document.getElementById('password-strength-label');
+
+  const levels = [
+    { min: 0,  pct: '0%',   color: 'var(--pebble)', label: '' },
+    { min: 1,  pct: '25%',  color: '#C0444B', label: 'Muy débil' },
+    { min: 5,  pct: '50%',  color: '#E0883A', label: 'Débil' },
+    { min: 8,  pct: '75%',  color: '#4A7C6F', label: 'Buena' },
+    { min: 12, pct: '100%', color: '#2E7D54', label: 'Excelente' },
+  ];
+
+  pwInput.addEventListener('input', () => {
+    const v   = pwInput.value;
+    let score = 0;
+    if (v.length >= 8)                         score++;
+    if (v.length >= 12)                        score++;
+    if (/[A-Z]/.test(v))                       score++;
+    if (/[0-9]/.test(v))                       score++;
+    if (/[^A-Za-z0-9]/.test(v))               score++;
+
+    const level = score === 0 ? levels[0]
+                : score <= 1  ? levels[1]
+                : score <= 2  ? levels[2]
+                : score <= 3  ? levels[3]
+                :               levels[4];
+
+    pwFill.style.width      = level.pct;
+    pwFill.style.background = level.color;
+    pwLabel.textContent     = level.label;
+  });
+
+  // ── Validación cliente ───────────────────────────────────────
+  const form    = document.getElementById('register-form');
+  const fields  = {
+    nombre:   document.getElementById('field-nombre'),
+    apellido: document.getElementById('field-apellido'),
+    email:    document.getElementById('field-email'),
+    edad:     document.getElementById('field-edad'),
+    password: document.getElementById('field-password'),
+    confirm:  document.getElementById('field-confirm'),
+  };
+  const submitBtn = document.getElementById('btn-submit');
+
+  function setErr(field, on) { field.classList.toggle('has-error', on); }
+  function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+
+  // Clear on input
+  Object.entries(fields).forEach(([, el]) => {
+    el.querySelector('input')?.addEventListener('input', () => setErr(el, false));
+  });
+
+  form.addEventListener('submit', e => {
+    errEl.classList.remove('visible');
+    let valid = true;
+
+    const nombre   = document.getElementById('nombre').value.trim();
+    const apellido = document.getElementById('apellido').value.trim();
+    const email    = document.getElementById('email').value.trim();
+    const edadVal  = document.getElementById('edad').value;
+    const pw       = document.getElementById('password').value;
+    const confirm  = document.getElementById('confirm').value;
+    const terms    = document.getElementById('terms').checked;
+
+    if (!nombre)              { setErr(fields.nombre,   true); valid = false; }
+    if (!apellido)            { setErr(fields.apellido, true); valid = false; }
+    if (!isEmail(email))      { setErr(fields.email,    true); valid = false; }
+    if (pw.length < 8)        { setErr(fields.password, true); valid = false; }
+    if (pw !== confirm)       { setErr(fields.confirm,  true); valid = false; }
+    if (edadVal !== '' && (Number(edadVal) < 13 || Number(edadVal) > 120)) {
+      setErr(fields.edad, true); valid = false;
+    }
+    if (!terms) {
+      document.getElementById('terms-error').style.display = 'block';
+      valid = false;
+    } else {
+      document.getElementById('terms-error').style.display = 'none';
+    }
+
+    if (!valid) {
+      e.preventDefault();
+      form.querySelector('.has-error input')?.focus();
+      return;
+    }
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+  });
+</script>
+</body>
+</html>

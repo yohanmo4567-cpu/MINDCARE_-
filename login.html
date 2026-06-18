@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindCare+ · Iniciar sesión</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ───────────────────────────────────────────────── */
+    :root {
+      --sage:        #4A7C6F;
+      --sage-light:  #6FA899;
+      --sage-mist:   #EAF3F1;
+      --slate:       #2B3A3E;
+      --mist:        #F5F8F7;
+      --cloud:       #FFFFFF;
+      --stone:       #7A8C8E;
+      --pebble:      #C8D5D3;
+      --error:       #C0444B;
+      --error-bg:    #FDF2F2;
+      --success:     #2E7D54;
+      --success-bg:  #EEF7F2;
+
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+      --radius-sm:    6px;
+      --radius-md:    12px;
+      --radius-lg:    20px;
+      --shadow:       0 4px 24px rgba(43, 58, 62, 0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--mist);
+      color: var(--slate);
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* ── BRAND PANEL ──────────────────────────────────────────── */
+    .brand-panel {
+      background: var(--sage);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .brand-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 10% 90%, rgba(255,255,255,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 90% 10%, rgba(255,255,255,0.05) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    /* Logo area */
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .brand-logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: contain;
+      background: rgba(255,255,255,0.15);
+      /* Placeholder shown when no image loaded */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .brand-logo-img-placeholder {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .brand-wordmark {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .brand-wordmark span { color: rgba(255,255,255,0.55); }
+
+    .brand-hero { position: relative; z-index: 1; }
+    .brand-tagline {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+    .brand-sub {
+      font-size: 0.93rem;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.7;
+      max-width: 30ch;
+    }
+
+    /* Feature pills */
+    .brand-features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .brand-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.8);
+    }
+    .brand-feature-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      flex-shrink: 0;
+    }
+
+    /* Decorative geometry */
+    .deco { position: absolute; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.12); }
+    .deco-1 { width: 280px; height: 280px; bottom: -60px; right: -80px; }
+    .deco-2 { width: 160px; height: 160px; bottom: 80px;  right: 40px; }
+    .deco-3 { width:  60px; height:  60px; bottom: 200px; right: 160px; background: rgba(255,255,255,0.06); border: none; }
+
+    /* ── FORM PANEL ───────────────────────────────────────────── */
+    .form-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .form-card {
+      background: var(--cloud);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: clamp(2rem, 5vw, 3rem) clamp(2rem, 5vw, 3.5rem);
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .card-header { margin-bottom: 1.75rem; }
+    .card-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--sage);
+      margin-bottom: 0.45rem;
+    }
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      color: var(--slate);
+      line-height: 1.15;
+    }
+
+    /* ── ALERTS ───────────────────────────────────────────────── */
+    .alert {
+      display: none;
+      border-radius: var(--radius-sm);
+      padding: 0.7rem 0.9rem;
+      font-size: 0.83rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.45;
+    }
+    .alert.visible { display: block; }
+    .alert-error   { background: var(--error-bg);   border: 1px solid rgba(192,68,75,0.25);  color: var(--error); }
+    .alert-success { background: var(--success-bg); border: 1px solid rgba(46,125,84,0.25);  color: var(--success); }
+
+    /* ── FIELDS ───────────────────────────────────────────────── */
+    .field { margin-bottom: 1.2rem; }
+    .field label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--slate);
+      margin-bottom: 0.4rem;
+    }
+    .input-wrap { position: relative; background: #fff; border-radius: var(--radius-sm); }
+    .input-wrap > svg {
+      position: absolute;
+      left: 13px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--stone);
+      pointer-events: none;
+      width: 16px; height: 16px;
+      transition: color 0.2s;
+    }
+    .field input {
+      width: 100%;
+      padding: 0.7rem 0.9rem 0.7rem 2.4rem;
+      border: 1.5px solid var(--pebble);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: var(--slate);
+      background: transparent;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      outline: none;
+      position: relative;
+      z-index: 1;
+    }
+    .field input::placeholder { color: var(--stone); opacity: 0.7; }
+    .field input:focus {
+      border-color: var(--sage);
+      background: var(--sage-mist);
+      box-shadow: 0 0 0 3px rgba(74,124,111,0.14);
+    }
+    .input-wrap:focus-within > svg { color: var(--sage); }
+    .toggle-pw {
+      position: absolute; right: 12px; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: var(--stone); padding: 2px; z-index: 2;
+      display: flex; align-items: center;
+    }
+    .toggle-pw:hover { color: var(--sage); }
+    .toggle-pw svg { width: 16px; height: 16px; }
+
+    .field-error {
+      display: none;
+      font-size: 0.77rem;
+      color: var(--error);
+      margin-top: 0.35rem;
+    }
+    .field.has-error input { border-color: var(--error); background: var(--error-bg); }
+    .field.has-error .field-error { display: block; }
+
+    /* ── META ROW ─────────────────────────────────────────────── */
+    .row-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .check-label {
+      display: flex; align-items: center; gap: 0.45rem;
+      font-size: 0.82rem; color: var(--stone); cursor: pointer;
+    }
+    .check-label input[type="checkbox"] { accent-color: var(--sage); width: 15px; height: 15px; }
+    .link-muted { font-size: 0.82rem; color: var(--sage); text-decoration: none; font-weight: 500; }
+    .link-muted:hover { text-decoration: underline; }
+
+    /* ── BUTTONS ──────────────────────────────────────────────── */
+    .btn-primary {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--sage);
+      color: #fff;
+      border: none; border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.95rem; font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary:hover  { background: var(--sage-light); box-shadow: 0 4px 16px rgba(74,124,111,0.3); }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:focus-visible { outline: 3px solid var(--sage); outline-offset: 2px; }
+    .btn-primary.loading .btn-text { opacity: 0; }
+    .btn-primary .spinner {
+      display: none; position: absolute;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+    .btn-primary.loading .spinner { display: block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── DIVIDER / SIGNUP ─────────────────────────────────────── */
+    .divider {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin: 1.5rem 0; font-size: 0.78rem;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--pebble); }
+    .divider span { color: var(--stone); white-space: nowrap; }
+
+    .signup-row { text-align: center; font-size: 0.85rem; color: var(--stone); }
+    .signup-row a { color: var(--sage); font-weight: 600; text-decoration: none; }
+    .signup-row a:hover { text-decoration: underline; }
+
+    .card-footer {
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--pebble);
+      text-align: center;
+      font-size: 0.73rem;
+      color: var(--stone);
+      line-height: 1.6;
+    }
+    .card-footer a { color: var(--stone); }
+    .card-footer a:hover { color: var(--sage); }
+
+    /* ── RESPONSIVE ───────────────────────────────────────────── */
+    @media (max-width: 700px) {
+      body { grid-template-columns: 1fr; }
+      .brand-panel { padding: 2rem 1.75rem 1.75rem; }
+      .brand-tagline { font-size: 1.6rem; }
+      .deco-1 { width: 180px; height: 180px; bottom: -40px; right: -50px; }
+      .deco-2 { width: 100px; height: 100px; bottom: 40px; right: 20px; }
+      .deco-3 { display: none; }
+      .form-panel { padding: 1.5rem 1rem; }
+      .form-card { border-radius: var(--radius-md); padding: 2rem 1.5rem; box-shadow: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .btn-primary, .field input { transition: none; }
+      .spinner { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── BRAND PANEL ──────────────────────────────────────────── -->
+<aside class="brand-panel" aria-hidden="true">
+  <div class="brand-logo-wrap">
+    <!--
+      LOGO: reemplaza esta línea con tu imagen:
+      <img src="logo.png" alt="MindCare+" class="brand-logo-img" />
+      Si no tienes imagen aún, el placeholder de abajo se mostrará.
+    -->
+    <div class="brand-logo-img-placeholder" aria-hidden="true">M+</div>
+    <div class="brand-wordmark">MindCare<span>+</span></div>
+  </div>
+
+  <div class="brand-hero">
+    <p class="brand-tagline">Tu bienestar,<br>un día a la vez.</p>
+    <p class="brand-sub">Registra emociones, construye hábitos saludables y descubre patrones en tu vida emocional.</p>
+    <div class="brand-features" aria-hidden="true">
+      <div class="brand-feature"><div class="brand-feature-dot"></div>Registro emocional diario</div>
+      <div class="brand-feature"><div class="brand-feature-dot"></div>Seguimiento de hábitos</div>
+      <div class="brand-feature"><div class="brand-feature-dot"></div>Actividades de bienestar</div>
+      <div class="brand-feature"><div class="brand-feature-dot"></div>Recursos educativos</div>
+    </div>
+  </div>
+
+  <div class="deco deco-1" aria-hidden="true"></div>
+  <div class="deco deco-2" aria-hidden="true"></div>
+  <div class="deco deco-3" aria-hidden="true"></div>
+</aside>
+
+<!-- ── FORM PANEL ───────────────────────────────────────────── -->
+<main class="form-panel">
+  <div class="form-card">
+
+    <header class="card-header">
+      <p class="card-eyebrow">Bienvenido de vuelta</p>
+      <h1 class="card-title">Inicia sesión</h1>
+    </header>
+
+    <!-- Alertas dinámicas desde PHP via GET param -->
+    <div class="alert alert-error"   id="alert-error"   role="alert" aria-live="assertive"></div>
+    <div class="alert alert-success" id="alert-success" role="status" aria-live="polite"></div>
+
+    <form id="login-form" action="login.php" method="POST" novalidate>
+
+      <div class="field" id="field-email">
+        <label for="email">Correo electrónico</label>
+        <div class="input-wrap">
+          <input type="email" id="email" name="email"
+            autocomplete="email" placeholder="tu@correo.com"
+            required aria-describedby="email-error" />
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </div>
+        <p class="field-error" id="email-error" role="alert">Ingresa un correo electrónico válido.</p>
+      </div>
+
+      <div class="field" id="field-password">
+        <label for="password">Contraseña</label>
+        <div class="input-wrap">
+          <input type="password" id="password" name="password"
+            autocomplete="current-password" placeholder="Tu contraseña"
+            required minlength="8" aria-describedby="password-error" />
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <button type="button" class="toggle-pw" id="toggle-pw" aria-label="Mostrar contraseña" aria-pressed="false">
+            <svg id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg id="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+        <p class="field-error" id="password-error" role="alert">La contraseña debe tener al menos 8 caracteres.</p>
+      </div>
+
+      <div class="row-meta">
+        <label class="check-label">
+          <input type="checkbox" name="remember" id="remember" />
+          Recordarme
+        </label>
+        <a href="recuperar.php" class="link-muted">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <button type="submit" class="btn-primary" id="btn-submit">
+        <div class="spinner" aria-hidden="true"></div>
+        <span class="btn-text">Iniciar sesión</span>
+      </button>
+    </form>
+
+    <div class="divider"><span>¿Nuevo en MindCare+?</span></div>
+    <p class="signup-row"><a href="registro.html">Crea tu cuenta gratis →</a></p>
+
+    <footer class="card-footer">
+      Al continuar aceptas nuestros
+      <a href="#">Términos de uso</a> y <a href="#">Política de privacidad</a>.
+    </footer>
+  </div>
+</main>
+
+<script>
+  // ── Lee mensajes de PHP desde la URL ────────────────────────
+  const params  = new URLSearchParams(window.location.search);
+  const errEl   = document.getElementById('alert-error');
+  const succEl  = document.getElementById('alert-success');
+
+  const errorMessages = {
+    'credenciales': 'Correo o contraseña incorrectos. Verifica tus datos.',
+    'inactivo':     'Tu cuenta está desactivada. Contacta al administrador.',
+    'campos':       'Completa todos los campos antes de continuar.',
+    'servidor':     'Error del servidor. Intenta de nuevo en unos minutos.',
+  };
+
+  if (params.get('error')) {
+    errEl.textContent = errorMessages[params.get('error')] || 'Ocurrió un error inesperado.';
+    errEl.classList.add('visible');
+  }
+  if (params.get('registro') === 'ok') {
+    succEl.textContent = '¡Cuenta creada! Ya puedes iniciar sesión.';
+    succEl.classList.add('visible');
+  }
+
+  // ── Toggle contraseña ────────────────────────────────────────
+  const pwInput   = document.getElementById('password');
+  const toggleBtn = document.getElementById('toggle-pw');
+  const iconEye   = document.getElementById('icon-eye');
+  const iconOff   = document.getElementById('icon-eye-off');
+  toggleBtn.addEventListener('click', () => {
+    const show = pwInput.type === 'text';
+    pwInput.type = show ? 'password' : 'text';
+    toggleBtn.setAttribute('aria-label',  show ? 'Mostrar contraseña' : 'Ocultar contraseña');
+    toggleBtn.setAttribute('aria-pressed', String(!show));
+    iconEye.style.display = show ? '' : 'none';
+    iconOff.style.display = show ? 'none' : '';
+  });
+
+  // ── Validación cliente ───────────────────────────────────────
+  const form        = document.getElementById('login-form');
+  const emailInput  = document.getElementById('email');
+  const fieldEmail  = document.getElementById('field-email');
+  const fieldPw     = document.getElementById('field-password');
+  const submitBtn   = document.getElementById('btn-submit');
+
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+  function setErr(field, on) { field.classList.toggle('has-error', on); }
+
+  emailInput.addEventListener('input', () => setErr(fieldEmail, false));
+  pwInput.addEventListener('input',    () => setErr(fieldPw,    false));
+
+  form.addEventListener('submit', e => {
+    errEl.classList.remove('visible');
+    let valid = true;
+    if (!isValidEmail(emailInput.value))   { setErr(fieldEmail, true); valid = false; }
+    if (pwInput.value.length < 8)          { setErr(fieldPw,    true); valid = false; }
+    if (!valid) {
+      e.preventDefault();
+      form.querySelector('.has-error input')?.focus();
+      return;
+    }
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+  });
+</script>
+</body>
+</html>
