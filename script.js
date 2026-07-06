@@ -1,55 +1,30 @@
-const navToggle = document.querySelector(".nav-toggle");
-const navMenu = document.querySelector("#nav-menu");
+// script.js — comportamiento mínimo: menú móvil y manejo simple del formulario
+document.addEventListener('DOMContentLoaded', function () {
+  // año en footer
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-if (navToggle && navMenu) {
-  navToggle.addEventListener("click", () => {
-    const isOpen = navToggle.getAttribute("aria-expanded") === "true";
-    navToggle.setAttribute("aria-expanded", String(!isOpen));
-    navMenu.classList.toggle("is-open", !isOpen);
-    document.body.classList.toggle("nav-open", !isOpen);
+  // menú móvil
+  const nav = document.getElementById('nav');
+  const toggle = document.getElementById('navToggle');
+  toggle && toggle.addEventListener('click', () => {
+    if (!nav) return;
+    const shown = nav.style.display === 'flex' || nav.style.display === 'block';
+    nav.style.display = shown ? 'none' : 'flex';
+    toggle.setAttribute('aria-expanded', String(!shown));
   });
 
-  navMenu.addEventListener("click", (event) => {
-    if (event.target instanceof HTMLAnchorElement) {
-      navToggle.setAttribute("aria-expanded", "false");
-      navMenu.classList.remove("is-open");
-      document.body.classList.remove("nav-open");
-    }
-  });
-}
-
-const year = document.querySelector("#year");
-if (year) {
-  year.textContent = String(new Date().getFullYear());
-}
-
-document.querySelectorAll(".auth-form").forEach((form) => {
-  const message = form.querySelector(".form-message");
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const fields = Array.from(form.querySelectorAll("input"));
-    let firstInvalid = null;
-
-    fields.forEach((field) => {
-      const isValid = field.checkValidity();
-      field.setAttribute("aria-invalid", String(!isValid));
-      if (!isValid && !firstInvalid) {
-        firstInvalid = field;
-      }
+  // manejo simple del formulario (demo)
+  const form = document.getElementById('contactForm');
+  const msg = document.getElementById('formMessage');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = data.get('name') || 'Alumno';
+      // Aquí podrías integrar Formspree, Netlify Forms o tu backend
+      msg.textContent = `Gracias ${name}, tu mensaje ha sido recibido (demo).`;
+      form.reset();
     });
-
-    if (firstInvalid) {
-      message.textContent = "Revisa los campos marcados antes de continuar.";
-      message.classList.add("is-error");
-      firstInvalid.focus();
-      return;
-    }
-
-    message.textContent = "Formulario validado correctamente. Listo para conectar con PHP y MySQL.";
-    message.classList.remove("is-error");
-    form.reset();
-    fields.forEach((field) => field.removeAttribute("aria-invalid"));
-  });
+  }
 });
