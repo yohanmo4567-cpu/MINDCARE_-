@@ -1,0 +1,66 @@
+:root{
+  --bg:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --primary:#0ea5a4; /* color principal (cambia aquí) */
+  --max-width:1100px;
+  --radius:8px;
+  --gap:1.25rem;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.5;
+}
+
+.container{max-width:var(--max-width);margin:0 auto;padding:1rem}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.site-header{border-bottom:1px solid #e6e9ee;background:#fff;position:sticky;top:0;z-index:100}
+.logo{font-weight:700;color:var(--text);text-decoration:none}
+.nav{display:flex;gap:1rem}
+.nav a{color:var(--muted);text-decoration:none;padding:0.6rem;border-radius:6px}
+.nav a:hover{color:var(--text);background:rgba(14,165,164,0.06)}
+
+.nav-toggle{display:none;background:none;border:0;font-size:1.25rem}
+
+.hero{
+  padding:4rem 0;
+  background:linear-gradient(180deg, rgba(14,165,164,0.08), transparent);
+}
+.hero h1{margin:0;font-size:2rem}
+.hero p{color:var(--muted);margin-top:0.5rem}
+
+.section{padding:3rem 0}
+.skills{display:flex;gap:0.5rem;list-style:none;padding:0;margin:0;margin-top:0.5rem}
+.skills li{background:#f1f5f9;padding:0.4rem 0.6rem;border-radius:999px;color:var(--muted);font-size:0.9rem}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin-top:1rem}
+.card{padding:1rem;border:1px solid #eef2f6;border-radius:var(--radius);background:#fff}
+.contact-form{display:grid;gap:0.75rem;max-width:540px}
+.contact-form label{display:block;font-size:0.9rem;color:var(--muted)}
+.contact-form input, .contact-form textarea{
+  width:100%;padding:0.6rem;border-radius:8px;border:1px solid #e6e9ee;background:#fff
+}
+.btn{
+  display:inline-block;padding:0.6rem 1rem;background:var(--primary);color:#fff;border-radius:8px;border:0;text-decoration:none
+}
+
+.site-footer{border-top:1px solid #e6e9ee;padding:1.25rem 0;margin-top:2rem;color:var(--muted);font-size:0.9rem}
+
+/* Responsive */
+@media (max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:700px){
+  .nav{display:none;position:absolute;right:1rem;top:64px;background:#fff;padding:0.75rem;border-radius:8px;box-shadow:0 8px 24px rgba(16,24,40,0.08)}
+  .nav-toggle{display:inline-block}
+  .grid{grid-template-columns:1fr}
+  .header-inner{gap:0.5rem}
+}
