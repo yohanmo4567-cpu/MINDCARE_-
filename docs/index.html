@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MindCare+ es una plataforma web para seguimiento emocional, habitos saludables, actividades de bienestar y recursos educativos.">
+  <title>MindCare+ | Bienestar emocional</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Navegacion principal">
+      <a class="brand" href="index.html" aria-label="MindCare+ inicio">
+        <span class="brand-mark" aria-hidden="true">+</span>
+        <span>MindCare+</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+        <span class="sr-only">Abrir menu</span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+
+      <div class="nav-menu" id="nav-menu">
+        <a href="#componentes">Componentes</a>
+        <a href="#modulos">Modulos</a>
+        <a href="#bienestar">Bienestar</a>
+        <a href="#recursos">Recursos</a>
+        <a class="nav-login" href="login.html">Iniciar sesion</a>
+        <a class="button button-small" href="registro.html">Registrarse</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Plataforma web de salud mental</p>
+          <h1>MindCare+</h1>
+          <p class="hero-lead">Apoyo digital para monitorear emociones, fortalecer habitos positivos y acceder a recursos de autocuidado desde cualquier dispositivo.</p>
+          <div class="hero-actions" aria-label="Acciones principales">
+            <a class="button" href="registro.html">Crear cuenta</a>
+            <a class="button button-secondary" href="login.html">Iniciar sesion</a>
+          </div>
+          <dl class="trust-list" aria-label="Caracteristicas clave">
+            <div>
+              <dt>24/7</dt>
+              <dd>Acceso web</dd>
+            </div>
+            <div>
+              <dt>3 s</dt>
+              <dd>Respuesta objetivo</dd>
+            </div>
+            <div>
+              <dt>100%</dt>
+              <dd>Responsive</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="hero-visual" role="img" aria-label="Panel de seguimiento emocional y habitos saludables de MindCare+">
+          <div class="wellness-panel">
+            <div class="panel-top">
+              <span>Hoy</span>
+              <strong>Bienestar</strong>
+            </div>
+            <div class="mood-card">
+              <span class="mood-icon" aria-hidden="true"></span>
+              <div>
+                <p>Estado emocional</p>
+                <strong>Tranquilo</strong>
+              </div>
+            </div>
+            <div class="progress-block">
+              <div>
+                <span>Habitos completados</span>
+                <strong>4/5</strong>
+              </div>
+              <div class="progress-track" aria-hidden="true">
+                <span></span>
+              </div>
+            </div>
+            <div class="mini-chart" aria-hidden="true">
+              <span style="height: 42%"></span>
+              <span style="height: 65%"></span>
+              <span style="height: 50%"></span>
+              <span style="height: 82%"></span>
+              <span style="height: 74%"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="component-bar" aria-label="Navegacion a componentes">
+      <div class="container component-bar-inner">
+        <strong>Componentes</strong>
+        <nav aria-label="Enlaces a componentes del sistema">
+          <a href="#autenticacion">Autenticacion</a>
+          <a href="#perfil">Perfil</a>
+          <a href="#emociones">Emociones</a>
+          <a href="#habitos">Habitos</a>
+          <a href="#estadisticas">Estadisticas</a>
+          <a href="#componente-recursos">Recursos</a>
+          <a href="#actividades">Actividades</a>
+        </nav>
+      </div>
+    </section>
+
+    <section class="section" id="modulos" aria-labelledby="modulos-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Modulos del sistema</p>
+          <h2 id="modulos-title">Herramientas centrales para el autocuidado</h2>
+        </div>
+
+        <div class="feature-grid" id="componentes">
+          <article class="feature-card" id="autenticacion">
+            <span class="feature-icon" aria-hidden="true">01</span>
+            <h3>Autenticacion y accesos</h3>
+            <p>Registro de nuevas cuentas, validacion de credenciales, inicio de sesion y recuperacion de contrasena.</p>
+          </article>
+          <article class="feature-card" id="perfil">
+            <span class="feature-icon" aria-hidden="true">02</span>
+            <h3>Gestion de perfil</h3>
+            <p>Visualizacion y actualizacion de datos basicos, avatar, foto y preferencias personales de la cuenta.</p>
+          </article>
+          <article class="feature-card" id="emociones">
+            <span class="feature-icon" aria-hidden="true">03</span>
+            <h3>Control emocional</h3>
+            <p>Registro diario del estado de animo, observaciones personales e historial cronologico para consulta posterior.</p>
+          </article>
+          <article class="feature-card" id="habitos">
+            <span class="feature-icon" aria-hidden="true">04</span>
+            <h3>Habitos y rutinas</h3>
+            <p>Creacion de habitos saludables, frecuencia personalizada y seguimiento de actividades completadas o pendientes.</p>
+          </article>
+          <article class="feature-card" id="estadisticas">
+            <span class="feature-icon" aria-hidden="true">05</span>
+            <h3>Analitica y progreso</h3>
+            <p>Indicadores visuales y estadisticas sobre la relacion entre emociones registradas y habitos cumplidos.</p>
+          </article>
+          <article class="feature-card" id="componente-recursos">
+            <span class="feature-icon" aria-hidden="true">06</span>
+            <h3>Modulo educativo</h3>
+            <p>Biblioteca de articulos, infografias y guias sobre salud mental, ansiedad y tecnicas de autocuidado.</p>
+          </article>
+          <article class="feature-card" id="actividades">
+            <span class="feature-icon" aria-hidden="true">07</span>
+            <h3>Actividades de bienestar</h3>
+            <p>Dinamicas de respiracion guiada, pausas activas y ejercicios interactivos enfocados en reducir el estres.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section split-section" id="bienestar" aria-labelledby="bienestar-title">
+      <div class="container split-grid">
+        <div>
+          <p class="eyebrow">Experiencia segura y accesible</p>
+          <h2 id="bienestar-title">Disenada para usuarios autonomos y equipos administradores</h2>
+          <p>MindCare+ prioriza una interfaz limpia, intuitiva y compatible con navegadores modernos, tablets, computadores y telefonos moviles.</p>
+        </div>
+
+        <ul class="check-list">
+          <li>Autenticacion por correo y contrasena segura.</li>
+          <li>Gestion de perfil, avatar y preferencias de cuenta.</li>
+          <li>Recordatorios internos para habitos y actividades.</li>
+          <li>Codigo mantenible, modular y preparado para futuras mejoras.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section resources-section" id="recursos" aria-labelledby="recursos-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Biblioteca educativa</p>
+          <h2 id="recursos-title">Contenido para aprender y practicar autocuidado</h2>
+        </div>
+
+        <div class="resource-grid">
+          <article>
+            <h3>Manejo de ansiedad</h3>
+            <p>Guias breves y validadas sobre respiracion, pausa consciente y organizacion emocional.</p>
+          </article>
+          <article>
+            <h3>Salud mental</h3>
+            <p>Articulos informativos orientados a prevencion, bienestar y reconocimiento de senales tempranas.</p>
+          </article>
+          <article>
+            <h3>Autocuidado diario</h3>
+            <p>Recursos practicos para dormir mejor, meditar, hidratarse y sostener rutinas saludables.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section" aria-labelledby="cta-title">
+      <div class="container cta-inner">
+        <div>
+          <p class="eyebrow">Comienza ahora</p>
+          <h2 id="cta-title">Crea tu espacio personal de bienestar emocional.</h2>
+        </div>
+        <div class="cta-actions">
+          <a class="button" href="registro.html">Registrarse</a>
+          <a class="button button-secondary" href="login.html">Ya tengo cuenta</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year">2026</span> MindCare+. Proyecto para SENATIC.</p>
+      <nav aria-label="Enlaces secundarios">
+        <a href="registro.html">Registro</a>
+        <a href="login.html">Inicio de sesion</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
